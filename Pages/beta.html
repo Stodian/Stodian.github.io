@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Layout with Header, Main Content, and Footer</title>
+<title>Updated Layout</title>
 <style>
   * { box-sizing: border-box; }
   body, html { margin: 0; padding: 0; height: 100%; }
-  
+  body { display: flex; flex-direction: column; }
+
   .header {
     padding: 10px 20px;
     background-color: #f2f2f2;
@@ -19,30 +20,30 @@
   
   .logo { font-size: 24px; font-weight: bold; }
   
-  .actions {
-    display: flex;
-    align-items: center;
-  }
+  .actions { display: flex; align-items: center; }
   
   button {
-  padding: 8px 16px;
-  margin-right: 10px;
-  border: none;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: background-color 0.3s; /* Added for a smooth transition on hover */
-}
+    padding: 8px 16px;
+    margin-right: 10px;
+    border: none;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 8px; /* Rounded corners for buttons */
+  }
 
-button:hover {
-  background-color: grey; /* Example hover effect */
-}
-
-.share-btn {
-  background-color: #e9e9e9;
-}
-
-
+  button:hover {
+    background-color: grey;
+  }
+  
+  .share-btn {
+    background-color: #e9e9e9;
+  }
+  
+  .share-btn:hover {
+    background-color: #dcdcdc;
+  }
   
   .user-profile {
     width: 30px;
@@ -52,54 +53,60 @@ button:hover {
     background-size: cover;
     background-position: center;
   }
-  
+
   .main-container {
     display: flex;
-    flex-grow: 1;
-    height: calc(100% - 60px); /* Adjusted for header and footer */
+    flex: 1;
+    padding: 10px;
+    padding-bottom: 20px; /* Creates a gap at the bottom */
   }
   
   .input-output-container {
     display: flex;
-    flex-grow: 2;
-    margin: 10px;
-    padding: 10px;
+    flex: 4; /* Takes up 80% of the main-container */
+    margin-right: 10px; /* Adds a gap between input-output and slider boxes */
   }
-  
+
   .box {
-    flex-grow: 1;
-    margin: 0 10px;
+    flex: 1;
     background: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    margin: 0 10px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px; 
   }
   
   .slider-container {
-    width: 25%;
+    flex: 1; /* Takes up remaining 20% of the main-container */
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
-  
-  .slider { margin: 10px 0; }
-  .slider label { display: block; margin-bottom: 5px; }
-  .slider input { width: 100%; }
-  
-  .footer {
-    padding: 10px 20px;
-    background-color: #f2f2f2;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+
+  .slider {
+    margin-bottom: 10px;
   }
+  
+  .slider label, .slider input { display: block; width: 100%; }
+
+  .slider-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+
+  .input-buttons {
+  display: flex;
+  justify-content: flex-start; /* Corrected property for aligning items to the left */
+  margin-bottom: 20px; /* Adds additional space below the container, if desired */
+  margin-left: 20px;
+}
+
+  
 </style>
 </head>
 <body>
@@ -107,8 +114,8 @@ button:hover {
 <div class="header">
   <div class="logo">Clean your File</div>
   <div class="actions">
-    <div>...</div>
-    <button>Button</button>
+    <button>...</button>
+    <button>Projects</button>
     <button class="share-btn">Share</button>
     <div class="user-profile" style="background-image: url('path-to-your-profile-image.jpg');"></div>
   </div>
@@ -118,7 +125,6 @@ button:hover {
   <div class="input-output-container">
     <div class="box" id="input-box">
       <label for="input-area">Input CAD Floorplan</label>
-      <!-- Place input elements here like file upload or drop area -->
     </div>
     <div class="box" id="output-box">
       <label>Output</label>
@@ -126,19 +132,35 @@ button:hover {
     </div>
   </div>
   <div class="slider-container">
-    <!-- Repeat this block for each slider you need -->
     <div class="slider">
       <label for="slider-1">Slider Title 1</label>
       <input type="range" id="slider-1" min="0" max="100" value="50">
     </div>
-    <!-- ... more sliders ... -->
+    <!-- Add more sliders as needed -->
+    <div class="slider-buttons">
+      <button class="reset-button">Reset</button>
+      <button class="save-settings-button">Save Settings</button>
+    </div>
   </div>
 </div>
-
-<div class="footer">
+<div class="input-buttons">
   <button id="design-button">Design</button>
   <button id="try-again-button">Try Again</button>
 </div>
+
+<script>
+  // Reset button functionality
+  document.querySelector('.reset-button').addEventListener('click', function() {
+    document.querySelectorAll('.slider input').forEach(function(slider) {
+      slider.value = 50; // Reset sliders to the middle position
+    });
+  });
+
+  // Save settings button functionality
+  document.querySelector('.save-settings-button').addEventListener('click', function() {
+    alert('Settings saved!');
+  });
+</script>
 
 </body>
 </html>
