@@ -1,31 +1,54 @@
-// JavaScript code
-const facts = [
-    "Engineering is the art of organizing and directing men and controlling the forces and materials of nature for the benefit of the human race.",
-    "The fewer moving parts, the better. Exactly. No truer words were ever spoken in the context of engineering.",
-    "At its heart, engineering is about using science to find creative, practical solutions. It is a noble profession."
-];
+class FleeingElement {
+    constructor(element) {
+        this.element = element;
+        this.speed = 3;
+        this.currentX = element.offsetLeft;
+        this.currentY = element.offsetTop;
+    }
 
-const tickerWrap = document.createElement('div');
-tickerWrap.className = 'ticker-wrap';
-document.body.appendChild(tickerWrap);
+    updatePosition(mouseX, mouseY) {
+        const rect = this.element.getBoundingClientRect();
+        const elementCenterX = rect.left + rect.width / 2;
+        const elementCenterY = rect.top + rect.height / 2;
 
-function startTicker() {
-    const tickerMove = document.createElement('div');
-    tickerMove.className = 'ticker-move';
-    tickerWrap.appendChild(tickerMove);
+        const deltaX = elementCenterX - mouseX;
+        const deltaY = elementCenterY - mouseY;
+        const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
 
-    const randomFact = facts[Math.floor(Math.random() * facts.length)];
-    const tickerContent = document.createElement('div');
-    tickerContent.className = 'ticker-content';
-    tickerContent.textContent = randomFact;
-    tickerMove.appendChild(tickerContent);
+        if (distance < 150) {
+            let angle = Math.atan2(deltaY, deltaX);
+            this.currentX += Math.cos(angle) * this.speed;
+            this.currentY += Math.sin(angle) * this.speed;
 
-    // Wait for the animation to finish plus a little buffer
-    tickerMove.addEventListener('animationend', () => {
-        tickerWrap.removeChild(tickerMove);
-        startTicker(); // Restart the ticker with the next fact
-    });
+            this.applyBounds();
+            this.element.style.left = `${this.currentX}px`;
+            this.element.style.top = `${this.currentY}px`;
+        }
+    }
+
+    applyBounds() {
+        const maxWidth = window.innerWidth - this.element.offsetWidth;
+        const maxHeight = window.innerHeight - this.element.offsetHeight;
+
+        this.currentX = Math.max(0, Math.min(this.currentX, maxWidth));
+        this.currentY = Math.max(0, Math.min(this.currentY, maxHeight));
+    }
 }
 
-document.addEventListener('DOMContentLoaded', startTicker);
+document.addEventListener('DOMContentLoaded', () => {
+    const links = document.querySelectorAll('.social-links a');
+    const fleeingElements = Array.from(links, link => {
+        link.style.position = 'fixed'; // Use fixed to allow full-screen movement
+        return new FleeingElement(link);
+    });
 
+    document.addEventListener('mousemove', e => {
+        fleeingElements.forEach(elem => elem.updatePosition(e.clientX, e.clientY));
+    });
+
+    const animate = () => {
+        requestAnimationFrame(animate);
+    };
+
+    animate();
+});
