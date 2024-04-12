@@ -195,10 +195,4 @@ footer {
         }
 
 
-/* Add this style in your CSS file or within a <style> tag in your HTML */
-.social-links a {
-    transition: transform 0.2s ease; /* Faster transition for a more responsive feel */
-    display: inline-block;
-    position: fixed; /* Fixed positioning relative to the viewport */
-    /* Initially position your icons at the bottom of the page using CSS */
-}
+        
