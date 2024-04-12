@@ -1,6 +1,6 @@
 # StodianReid.com
 
-Welcome to StodianReid.com! This is the repository for my personal website where I showcase my work in the construction industry, particularly within the MEP (Mechanical, Electrical, and Plumbing) design world. Additionally, you'll find my blog and beta AI design software here.
+Welcome to StodianReid.com! This is the repository for my personal website where I showcase my work in the construction industry, particularly within the MEP (Mechanical, Electrical, and Plumbing) design world. Additionally, you'll find my blog and beta design software here.
 
 ## Website Overview
 
