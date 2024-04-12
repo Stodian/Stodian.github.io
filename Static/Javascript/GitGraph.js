@@ -31,8 +31,8 @@ function renderGraph() {
     });
 }
 
-// Function to generate legend
-function renderLegend(graph) {
+// Function to generate legend for the graph
+function renderLegend(graph, dataLength) {
     const legend = graph.querySelector('.legend');
     legend.innerHTML = '';
 
@@ -46,14 +46,26 @@ function renderLegend(graph) {
         const colorBox = document.createElement('div');
         colorBox.style.backgroundColor = color;
 
-        const legendText = document.createElement('div');
-        legendText.textContent = texts[index];
-
         legendItem.appendChild(colorBox);
-        legendItem.appendChild(legendText);
+
+        const legendText = document.createElement('div');
+        if (dataLength !== null && index === 4) {
+            legendText.textContent = `More (${dataLength})`;
+        } else {
+            legendText.textContent = texts[index];
+            if (index !== texts.length - 1) {
+                legendText.style.letterSpacing = '1px'; // Add space between letters
+            }
+        }
+
+
         legend.appendChild(legendItem);
     });
 }
+
+
+
+
 
 // Call renderGraph function to initially render the graphs
 renderGraph();
