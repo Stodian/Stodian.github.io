@@ -79,9 +79,9 @@
 
 /* Styles for the colored circle in the legend */
 .legend-item div {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 20%;
 }
 
 /* Styles for the text in the legend */
@@ -99,6 +99,21 @@
 }
 
 .footer-line { margin-top: 100px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Aligns items at the center */
+}
+
+.legend {
+    margin: 0 10px; /* Smaller margin for minimal but clear separation */
+}
+
+.left-text, .right-text {
+    /* Minimal or no margin for closer placement */
+    margin: 0 5px; /* Small margin for minimal separation */
 }
 
     </style>
@@ -121,7 +136,7 @@
     </header>
 
     <main>
-        <h1>Me</h1>
+        <h1>Stodian</h1>
         <!-- Add more content here as needed -->
     
         <div class="contribution-graph">
@@ -142,14 +157,20 @@
                 <div class="month">Nov</div>
                 <div class="month">Dec</div>
             </div>
-            <div class="legend">
+            
+            <div class="container">
+                <span class="left-text">Less</span>
+                <div class="legend">Your Legend Content Here</div>
+                <span class="right-text">More</span>
+            </div>
+            
                 <!-- Legend will be dynamically generated here -->
             </div>
         </div>
 
-        <p>VS</p>
+        <p></p>
 
-        <h1>the guy she told me not to worry about</h1>
+        <h1></h1>
 
 
 
@@ -171,7 +192,11 @@
                 <div class="month">Nov</div>
                 <div class="month">Dec</div>
             </div>
-            <div class="legend">
+            <div class="container">
+                <span class="left-text">Less</span>
+                <div class="legend">Your Legend Content Here</div>
+                <span class="right-text">More</span>
+            </div>
                 <!-- Legend will be dynamically generated here -->
             </div>
         
