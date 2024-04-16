@@ -165,6 +165,11 @@
   document.querySelector('.save-settings-button').addEventListener('click', function() {
     alert('Settings saved!');
   });
+
+  // Redirect to another page on button click
+  document.getElementById('design-button').addEventListener('click', function() {
+    window.location.href = '../Pages/drawing_pallet.html'; // Redirects to the new page
+  });
 </script>
 
 </body>
