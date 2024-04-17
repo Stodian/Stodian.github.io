@@ -111,6 +111,23 @@
     color: white;
   }
 
+  #input-box {
+    width: 100%;  /* Adjust the width as needed */
+    height: auto; /* Adjust the height as needed, or set to a fixed size */
+    border: 1px solid #ccc; /* Optional, adds a border around the box */
+    position: relative; /* Ensures the label and input are positioned correctly */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#floorplan-image {
+    max-width: 100%; /* Ensures the image does not overflow the box */
+    height: auto; /* Keeps the aspect ratio of the image */
+    display: block; /* Ensures the image is not hidden */
+}
+
   
 </style>
 
@@ -131,12 +148,18 @@
 <div class="main-container">
   <div class="input-output-container">
     <div class="box" id="input-box">
-      <label for="input-area">Input CAD Floorplan</label>
-    </div>
-    <div class="box" id="output-box">
-      <label>Output</label>
-      <div id="output-area">Processed output will be shown here.</div>
-    </div>
+      <div id="upload-container">
+          <label for="input-area">Input CAD Floorplan</label>
+          <input type="file" id="input-area" accept="image/*">
+      </div>
+      <div id="image-container">
+          <img id="floorplan-image" src="" alt="Floorplan Image" style="display: none;">
+      </div>
+  </div>
+  <div class="box" id="output-box">
+    <label>Processed Output</label>
+    <img id="output-image" src="" alt="Processed Image" style="max-width: 100%; display: none;">
+</div>
   </div>
   <div class="slider-container">
     <div class="slider">
@@ -177,6 +200,44 @@
     document.getElementById('back-button').addEventListener('click', function() {
     window.location.href = '../index.html';
   });
+
+
+  
+  document.getElementById('input-area').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imgElement = document.getElementById('floorplan-image');
+            imgElement.src = e.target.result;
+            imgElement.style.display = 'block'; // Display the uploaded image
+
+            // Hide the upload container
+            document.getElementById('upload-container').style.display = 'none';
+
+            // Prepare the image to be sent to the server
+            const formData = new FormData();
+            formData.append('image', file); // Append the file
+
+            // Send the image to the server for processing
+            fetch('/process-image', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.blob()) // Convert the response to blob
+            .then(blob => {
+                // Display the processed image in the output box
+                const outputImage = document.getElementById('output-image');
+                outputImage.src = URL.createObjectURL(blob);
+                outputImage.style.display = 'block'; // Make sure the processed image is visible
+            })
+            .catch(error => console.error('Error:', error));
+        };
+        reader.readAsDataURL(file); // This is only for displaying the uploaded image
+    }
+});
+
+
 </script>
 
 </body>
