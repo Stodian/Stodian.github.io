@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-def apply_contrast(image, contrast_value):
+def contrast_image(image, contrast_value):
     """
     Adjusts the contrast of an image.
     :param image: OpenCV image

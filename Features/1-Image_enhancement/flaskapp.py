@@ -7,8 +7,8 @@ from Features.1-Image_enhancement import Brightness, Contrast, Sharpening
 
 app = Flask(__name__)
 
-@app.route('/process-image', methods=['POST'])
-def process_image():
+@app.route('/brighten-image', methods=['POST'])
+def brighten_image():
     file = request.files['image'].read()  # Read the file
     npimg = np.frombuffer(file, np.uint8)  # Convert file to a numpy array
     image = cv2.imdecode(npimg, cv2.IMREAD_COLOR)  # Decode the image array into an image
@@ -21,8 +21,6 @@ def process_image():
     # Apply the enhancements
     if brightness_value != 0:
         image = Brightness.brighten_image(image, brightness_value)
-    if contrast_value != 1:
-        image = Contrast.contrast_image(image, contrast_value)
 
     # Encode the processed image to send as response
     _, img_encoded = cv2.imencode('.jpg', image)  # You might want to choose the format based on the input
