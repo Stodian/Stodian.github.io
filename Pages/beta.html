@@ -209,38 +209,69 @@
 
 
   
-  document.getElementById('input-area').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
+  document.addEventListener('DOMContentLoaded', function () {
+    const imageFileInput = document.getElementById('image-file-input');
+
+    const brightnessSlider = document.getElementById('brightness-slider');
+    const contrastSlider = document.getElementById('contrast-slider');
+    const sharpeningSlider = document.getElementById('sharpening-slider');
+
+    const outputImage = document.getElementById('output-image');
+
+    // Function to send the image and contrast to the server, and update the output image
+    function process_image() {
+        if (!imageFileInput.files.length) {
+            console.log('No image has been selected.');
+            return;
+        }
+
+        const brightnessValue = brightnessSlider.value;
+        const contrastValue = contrastSlider.value;
+        const sharpeningValue = sharpeningSlider.value;
+
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('brightness', brightnessValue);
+        formData.append('contrast', contrastValue);
+        formData.append('sharpening', sharpeningValue);
+
+        fetch('/apply-image_enhancement', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Server responded with ${response.status}`);
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            const imageUrl = URL.createObjectURL(blob);
+            outputImage.src = imageUrl;
+            outputImage.style.display = 'block'; // Ensure the processed image is visible
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    // Event listener for the contrast slider to process the image on change
+    brightnessSlider.addEventListener('input', processAndDisplayImage);
+    contrastSlider.addEventListener('input', processAndDisplayImage);
+    sharpeningSlider.addEventListener('input', processAndDisplayImage);
+
+    // Event listener for the file input to load and display the selected image and process it
+    imageFileInput.addEventListener('change', function(event) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            const imgElement = document.getElementById('floorplan-image');
-            imgElement.src = e.target.result;
-            imgElement.style.display = 'block'; // Display the uploaded image
-
-            // Hide the upload container
+            outputImage.src = e.target.result; // Display the uploaded image
+            outputImage.style.display = 'block';
             document.getElementById('upload-container').style.display = 'none';
-
-            // Prepare the image to be sent to the server
-            const formData = new FormData();
-            formData.append('image', file); // Append the file
-
-            // Send the image to the server for processing
-            fetch('/process-image', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.blob()) // Convert the response to blob
-            .then(blob => {
-                // Display the processed image in the output box
-                const outputImage = document.getElementById('output-image');
-                outputImage.src = URL.createObjectURL(blob);
-                outputImage.style.display = 'block'; // Make sure the processed image is visible
-            })
-            .catch(error => console.error('Error:', error));
+            // Process the image immediately upon file selection
+            processAndDisplayImage();
         };
-        reader.readAsDataURL(file); // This is only for displaying the uploaded image
-    }
+        reader.readAsDataURL(event.target.files[0]);
+    });
 });
 
 
