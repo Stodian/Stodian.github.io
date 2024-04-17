@@ -6,26 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
 
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6tAduWuL-vyr_Z5c-LsRGZYXfZIUNmcI&callback=console.debug&libraries=maps,marker&v=beta">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <script type="module" src="../Static/Javascript/Map/map_setup.js"></script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6tAduWuL-vyr_Z5c-LsRGZYXfZIUNmcI&callback=initMap">
     </script>
 
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-      gmp-map {
-        height: 100%;
-        filter: grayscale(100%);
-      }
-      
-      /* Optional: Makes the sample page fill the window. */
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+
+       gmp-map {
+  height: 100%;
+  filter: grayscale(90%) contrast(120%) brightness(95%);
+  background: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255,255,255,0.8);
+}
+
+/* 
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map. 
+ */
+ #map {
+  height: 100%;
+}
+
+/* 
+ * Optional: Makes the sample page fill the window. 
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
     </style>
+
     <link rel="stylesheet" type="text/css" href="../Static/Styles/index.css">
+
 </head>
 
 <body>
@@ -42,9 +64,7 @@
     </header>
 
     <main>
-        <gmp-map center="52.43382263183594,-1.9201319217681885" zoom="14" map-id="DEMO_MAP_ID">
-            <gmp-advanced-marker position="52.43382263183594,-1.9201319217681885" title="My location"></gmp-advanced-marker>
-          </gmp-map>
+        <div id="map"></div>
     </main>
 
     <footer>
@@ -58,6 +78,9 @@
             <a href="https://www.youtube.com/" target="_blank"><img src="../Static/Icons/2644987_media_social_youtube_icon.png" alt="YouTube"></a>
         </div>
     </footer>
+
+    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+        ({key: "AIzaSyD6tAduWuL-vyr_Z5c-LsRGZYXfZIUNmcI", v: "weekly"});</script>
 
 </body>
 
