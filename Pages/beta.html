@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+  <script async src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+  
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Updated Layout</title>
@@ -182,6 +185,8 @@
 </div>
 
 <div class="main-container">
+
+
   <div class="input-output-container">
     <div class="box" id="input-box">
       <div id="upload-container">
@@ -192,10 +197,14 @@
           <img id="floorplan-image" src="" alt="Floorplan Image" style="display: none;">
       </div>
   </div>
+
+
   <div class="box" id="output-box">
     <label>Processed Output</label>
     <canvas id="output-image" style="max-width: 100%; display: none;"></canvas>
   </div>
+
+
   </div>
   <div class="slider-container">
     <div class="slider">
@@ -208,11 +217,15 @@
       <label for="slider-1">Sharpening</label>
       <input type="range" id="sharpening-slider" min="0" max="100" value="50">
     </div>
-    <!-- Add more sliders as needed -->
+
+
+
     <div class="slider-buttons">
       <button class="reset-button">Reset</button>
       <button class="save-settings-button">Save Settings</button>
     </div>
+
+    
   </div>
 </div>
 <div class="input-buttons">
