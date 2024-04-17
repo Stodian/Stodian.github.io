@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
     <link rel="stylesheet" type="text/css" href="../Static/Styles/index.css">
+    <link rel="stylesheet" type="text/css" href="../Static/Styles/unpkg.css">
+    <style>
+        #mapid { height: 100vh; }
+    </style>
 </head>
 
 <body>
@@ -25,6 +29,9 @@
         <h1>Developments</h1>
         <p>Welcome to our developments page. We will have this built out before you know it...</p>
         <!-- Add more content here as needed -->
+
+        <div id="mapid"></div>
+        
     </main>
 
     <footer>
@@ -39,6 +46,11 @@
         </div>
     </footer>
 
+
+    document.addEventListener('DOMContentLoaded', function() {
+        <script src="../Static/Javascript/Map/map_setup.js"></script>
+    });
+    
 </body>
 
 </html>
