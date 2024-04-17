@@ -1,0 +1,26 @@
+[
+    {
+      "name": "Business 1",
+      "location": {
+        "lat": 51.5074,
+        "lng": -0.1278
+      },
+      "type": "Design & Build",
+      "website": "www.business1.com",
+      "phone": "123-456-7890",
+      "email": "info@business1.com",
+      "description": "This is a brief description of Business 1."
+    },
+    {
+      "name": "Business 2",
+      "location": {
+        "lat": 51.5074,
+        "lng": -0.1278
+      },
+      "type": "Architecture",
+      "website": "www.business2.com",
+      "phone": "123-456-7890",
+      "email": "info@business2.com",
+      "description": "This is a brief description of Business 2."
+    }
+  ]
