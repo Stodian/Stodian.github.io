@@ -137,6 +137,7 @@
 
 #upload-container label {
   font-weight: bold;
+  font-size: 1.2em;
   margin-bottom: 0.5rem;
 }
 
@@ -152,6 +153,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 #output-box label {
@@ -159,12 +161,12 @@
   font-size: 1.2em;
   font-weight: bold;
   margin-bottom: 10px;
+  text-align: center; /* Center the text horizontally */
 }
-
-
   
 </style>
 
+<script async src="https://docs.opencv.org/master/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
 
 </head>
 <body>
@@ -192,8 +194,8 @@
   </div>
   <div class="box" id="output-box">
     <label>Processed Output</label>
-    <img id="output-image" src="" alt="Processed Image" style="max-width: 100%; display: none;">
-</div>
+    <canvas id="output-image" style="max-width: 100%; display: none;"></canvas>
+  </div>
   </div>
   <div class="slider-container">
     <div class="slider">
@@ -269,72 +271,34 @@
 });
 
 
+document.querySelector("#input-area").addEventListener("change", function(e) {
+  const input = e.target;
+  const file = input.files[0];
+  const reader = new FileReader();
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const imageFileInput = document.getElementById('image-file-input');
-    const brightnessSlider = document.getElementById('brightness-slider');
-    const contrastSlider = document.getElementById('contrast-slider');
-    const sharpeningSlider = document.getElementById('sharpening-slider');
-    const outputImage = document.getElementById('output-image');
+  reader.onload = function(event) {
+    const img = new Image();
+    img.src = event.target.result;
+    img.style.maxWidth = "100%";
 
-    // Function to send the image and settings to the server, and update the output image
-    function process_image() {
-        if (!imageFileInput.files.length) {
-            console.log('No image has been selected.');
-            return;
-        }
+    // Replace the file input button with the selected image
+    const inputContainer = input.closest("div");
+    inputContainer.querySelector("label").style.display = "none";
+    inputContainer.querySelector("input").style.display = "none";
 
-        const brightnessValue = brightnessSlider.value;
-        const contrastValue = contrastSlider.value;
-        const sharpeningValue = sharpeningSlider.value;
+    // Add the selected image to the input area
+    const imageContainer = document.querySelector("#image-container");
+    imageContainer.querySelector("img").style.display = "block";
+    imageContainer.querySelector("img").src = event.target.result;
+  };
 
-        const formData = new FormData();
-        formData.append('image', imageFileInput.files[0]);
-        formData.append('brightness', brightnessValue);
-        formData.append('contrast', contrastValue);
-        formData.append('sharpening', sharpeningValue);
-
-        fetch('/apply-image_enhancement', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Server responded with ${response.status}`);
-            }
-            return response.blob();
-        })
-        .then(blob => {
-            const imageUrl = URL.createObjectURL(blob);
-            outputImage.src = imageUrl;
-            outputImage.style.display = 'block'; // Ensure the processed image is visible
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-
-    // Event listener for the sliders to process the image on change
-    brightnessSlider.addEventListener('input', process_image);
-    contrastSlider.addEventListener('input', process_image);
-    sharpeningSlider.addEventListener('input', process_image);
-
-    // Event listener for the file input to load and display the selected image
-    imageFileInput.addEventListener('change', function(event) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            outputImage.src = e.target.result; // Display the uploaded image
-            outputImage.style.display = 'block';
-            document.getElementById('upload-container').style.display = 'none';
-            // Process the image immediately upon file selection
-            process_image();
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    });
+  reader.readAsDataURL(file);
 });
 
 
 </script>
+
+<script src="../Static/Javascript/Floorplan/completeprocess.js"></script>
 
 </body>
 </html>
