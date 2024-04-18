@@ -50,11 +50,7 @@
     
         function initMap() {
           const location = { lat: 52.433799743652344, lng: -1.9201515913009644 };
-    
-          const map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 14,
-            center: location
-          });
+  
     
           new google.maps.Marker({
             position: location,
@@ -70,7 +66,7 @@
         function initMap() {
           const location = { lat: 52.433799743652344, lng: -1.9201515913009644 };
           const mapOptions = {
-            zoom: 14,
+            zoom: 19,
             center: location,
             styles: [
               { elementType: 'geometry', stylers: [{ color: '#ffffff' }] },
@@ -114,7 +110,16 @@
     center: location, // The position of the center of the circle
     radius: 100 // The radius of the circle in meters
   });
-    
+
+  let zoom = mapOptions.zoom;
+      const interval = setInterval(() => {
+        zoom -= 0.07; // Adjust the decrement rate for the desired animation speed
+        map.setZoom(zoom);
+        if (zoom <=14) {
+          clearInterval(interval);
+        }
+      }, 70); // Adjust the interval for smoother or faster animation
+  
         }
       </script>
 
