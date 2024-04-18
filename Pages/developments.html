@@ -6,29 +6,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
 
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-
-    <script type="module" src="../Static/Javascript/Map/map_setup.js"></script>
+    <style>
+        /* Reset margin and padding for all elements */
+        html, body {
+          height: 100%; /* Ensures that the html and body elements take up the full height of the viewport */
+          margin: 0;
+          padding: 0;
+          overflow: hidden; /* Prevents scrolling on the entire page */
+        }
+      
+        header {
+          text-align: center; /* Center aligns the text for aesthetics */
+          padding: 0px 0; /* Adds padding but only vertically */
+          background: #f8f9fa; /* Gives a light grey background */
+        }
+      
+        main {
+          height: calc(100vh - 120px); /* Reduces the height of main by the total height of the header and footer */
+          overflow: hidden; /* Prevents scrolling within the main tag */
+        }
+      
+        #map {
+          width: 100%;
+          height: 100%; /* Sets the map to take up all of the available space in the main tag */
+        }
+      </style>
 
     <style>
 
- #map {
-  height: 100%;
-}
+    
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+      </style>
 
 
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+      <script>
+        // This example creates a simple map with a marker.
+    
+        function initMap() {
+          const location = { lat: 52.433799743652344, lng: -1.9201515913009644 };
+    
+          const map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 14,
+            center: location
+          });
+    
+          new google.maps.Marker({
+            position: location,
+            map: map,
+            title: 'My Location'
+          });
+        }
+      </script>
 
-    </style>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6tAduWuL-vyr_Z5c-LsRGZYXfZIUNmcI&callback=initMap"></script>
+
+      <script>
+        function initMap() {
+          const location = { lat: 52.433799743652344, lng: -1.9201515913009644 };
+          const mapOptions = {
+            zoom: 14,
+            center: location,
+            styles: [
+              { elementType: 'geometry', stylers: [{ color: '#ffffff' }] },
+              { elementType: 'labels', stylers: [{ visibility: 'off' }] },
+              { elementType: 'geometry.stroke', stylers: [{ color: '#000000' }] },
+              {
+                featureType: 'road',
+                elementType: 'geometry',
+                stylers: [{ color: '#999999' }]
+              },
+              {
+                featureType: 'road',
+                elementType: 'geometry.stroke',
+                stylers: [{ color: '#666666' }]
+              },
+              {
+                featureType: 'water',
+                elementType: 'geometry',
+                stylers: [{ color: '#C9C9C9' }]
+              },
+              // ... add additional feature types as needed
+            ],
+            // Disable various UI elements to enhance the 'gamified' look
+            disableDefaultUI: true,
+            // Optional: depending on the gamified look you want, consider enabling or disabling certain controls
+            mapTypeControl: false,
+            streetViewControl: false,
+            fullscreenControl: false,
+          };
+      
+          const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            // Create a circle overlay instead of a marker
+  const circle = new google.maps.Circle({
+    strokeColor: '#FF0000', // The color of the circle's border
+    strokeOpacity: 0.8, // The opacity of the circle's border
+    strokeWeight: 2, // The thickness of the circle's border
+    fillColor: '#FF0000', // The color of the circle's fill
+    fillOpacity: 0.35, // The opacity of the circle's fill
+    map: map, // The map to place the circle on
+    center: location, // The position of the center of the circle
+    radius: 100 // The radius of the circle in meters
+  });
+    
+        }
+      </script>
+
+
 
     <link rel="stylesheet" type="text/css" href="../Static/Styles/index.css">
 
 </head>
+
 
 <body>
     <header>
@@ -43,29 +137,12 @@ body {
         </nav>
     </header>
 
+
     <main>
         <div id="map"></div>
-
-            <!-- prettier-ignore -->
-    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-        ({key: "AIzaSyD6tAduWuL-vyr_Z5c-LsRGZYXfZIUNmcI", v: "weekly"});</script>
-
     </main>
 
-    <footer>
-        <!-- Horizontal rule -->
-        <hr class="footer-line">
-        <!-- Social media links -->
-        <div class="social-links">
-            <a href="https://www.linkedin.com/" target="_blank"><img src="../Static/Icons/2644994_linkedin_media_social_icon.png" alt="LinkedIn Icon"></a>
-            <a href="https://www.instagram.com/" target="_blank"><img src="../Static/Icons/4691240_instagram_icon.png" alt="Instagram"></a>
-            <a href="https://twitter.com/" target="_blank"><img src="../Static/Icons/2644990_media_social_twitter_icon.png" alt="Twitter"></a>
-            <a href="https://www.youtube.com/" target="_blank"><img src="../Static/Icons/2644987_media_social_youtube_icon.png" alt="YouTube"></a>
-        </div>
-    </footer>
 
-    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-        ({key: "AIzaSyD6tAduWuL-vyr_Z5c-LsRGZYXfZIUNmcI", v: "weekly"});</script>
 
 </body>
 
