@@ -1,36 +1,22 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const mongoose=require('mongoose');
-const dotenv = require('dotenv').config();
-const passport = require('passport');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
-require('./Google Authentication/conf/passport')(passport);
 
-// Mongo & Template Setup
-var app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static('public'));
-app.set('view engine','ejs');
 
-// Middleware & DB for Sessions Setup
-app.use(express.urlencoded({extended:true}))
-app.use(
-    session({
-      secret: 'keyboard cat',
-      resave: false,
-      saveUninitialized: false,
-      store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
-    })
-  )
-  // Passport middleware
-app.use(passport.initialize())
-app.use(passport.session())
+// Serve static HTML pages
+app.use(express.static(path.join(__dirname, 'Pages')));
+// Serve static assets like JavaScript, CSS, images from the Static folder
+app.use('/static', express.static(path.join(__dirname, 'Static')));
 
-// Use Routes
-app.use(require("./Google Authentication/routes/index"))
-app.use(require('./Google Authentication/routes/auth'))
 
-app.listen(PORT,console.log(`listening at ${PORT}`))
+// Serve GeoJSON file
+app.get('/geojson', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Counties_and_Unitary_Authorities_December_2021_UK_BUC.geojson'));
+});
+
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${3000}`);
+});
