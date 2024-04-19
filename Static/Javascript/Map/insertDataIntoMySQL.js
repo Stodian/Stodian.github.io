@@ -3,7 +3,7 @@ const fetchArchitectOffices = require('./fetchDataFromGooglePlaces.js');
 
 const connection = mysql.createConnection({
   host: 'localhost',
-  user: 'root',
+  user: '3thanreid',
   password: 'Titlwath28!',
   database: 'mymapdatabase'
 });
